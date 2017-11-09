@@ -7,15 +7,9 @@ package software2;
 
 /**
  *
- * @author SFFPC
+ * @author Christopher Sherrill
  */
-public class Scheduler {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
+public class AppointmentReminders {
     
 }
+ 

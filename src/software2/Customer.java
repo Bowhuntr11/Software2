@@ -11,13 +11,13 @@ import java.sql.Timestamp;
  *
  * @author Christopher Sherrill
  */
-public class User {
-    private int userId;
-    private String userName;
-    private String password;
+public class Customer {
+    private int customerId;
+    private String customerName;
+    private int addressId;
     private byte active;
-    private String createBy;
     private Timestamp createDate;
+    private String createdBy;
     private Timestamp lastUpdate;
-    private String lastUpdatedBy;
+    private String lastUpdateby;
 }
