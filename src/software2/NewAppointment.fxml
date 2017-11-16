@@ -4,13 +4,11 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="software2.NewAppointmentController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="software2.NewAppointmentController">
    <children>
       <Label layoutX="178.0" layoutY="23.0" text="New Appointment">
          <font>
@@ -21,13 +19,27 @@
       <TextField fx:id="description" layoutX="191.0" layoutY="122.0" prefHeight="25.0" prefWidth="223.0" promptText="Description" />
       <TextField fx:id="location" layoutX="191.0" layoutY="157.0" prefHeight="25.0" prefWidth="223.0" promptText="Location" />
       <TextField fx:id="url" layoutX="191.0" layoutY="193.0" prefHeight="25.0" prefWidth="223.0" promptText="Url" />
-      <Spinner fx:id="startTime" layoutX="117.0" layoutY="316.0" />
-      <Spinner fx:id="endTime" layoutX="340.0" layoutY="316.0" />
       <ComboBox fx:id="selectedCustomer" layoutX="225.0" layoutY="227.0" prefWidth="150.0" promptText="Customer" />
-      <Label layoutX="145.0" layoutY="299.0" text="Start Time (Local)" />
-      <Label layoutX="379.0" layoutY="299.0" text="End Time (Local)" />
+      <Label layoutX="132.0" layoutY="303.0" text="Start Time (Local)" />
+      <Label layoutX="371.0" layoutY="303.0" text="End Time (Local)" />
       <Button fx:id="save" layoutX="205.0" layoutY="361.0" mnemonicParsing="false" prefWidth="70.0" text="Save" />
       <Button fx:id="cancel" layoutX="326.0" layoutY="361.0" mnemonicParsing="false" prefWidth="70.0" text="Cancel" />
       <DatePicker layoutX="213.0" layoutY="265.0" promptText="Date" />
+      <ComboBox fx:id="startMin" layoutX="148.0" layoutY="323.0" prefHeight="25.0" prefWidth="61.0" />
+      <ComboBox fx:id="startHour" layoutX="80.0" layoutY="323.0" prefHeight="25.0" prefWidth="61.0" />
+      <ComboBox fx:id="startAMPM" layoutX="215.0" layoutY="323.0" prefHeight="25.0" prefWidth="61.0"/>
+      <Label layoutX="143.0" layoutY="323.0" text=":">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="endMin" layoutX="390.0" layoutY="323.0" prefHeight="25.0" prefWidth="61.0" />
+      <ComboBox fx:id="endHour" layoutX="322.0" layoutY="323.0" prefHeight="25.0" prefWidth="61.0" />
+      <ComboBox fx:id="endAMPM" layoutX="457.0" layoutY="323.0" prefHeight="25.0" prefWidth="61.0" />
+      <Label layoutX="385.0" layoutY="323.0" text=":">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
