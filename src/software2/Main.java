@@ -18,7 +18,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		Parent root;
 		try {
-			root = FXMLLoader.load(getClass().getResource("NewAppointment.fxml"));
+			root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;

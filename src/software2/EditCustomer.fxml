@@ -5,8 +5,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="1031.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="software2.EditCustomerController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="1031.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="software2.EditCustomerController">
    <children>
       <TableView layoutX="26.0" layoutY="22.0" prefHeight="322.0" prefWidth="980.0">
         <columns>
@@ -18,7 +17,7 @@
             <TableColumn prefWidth="144.0" text="Phone #" />
         </columns>
       </TableView>
-      <Button layoutX="857.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Save" />
-      <Button layoutX="936.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Cancel" />
+      <Button fx:id="saveBtn" layoutX="857.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Save" />
+      <Button fx:id="cancelBtn" layoutX="936.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Cancel" />
    </children>
 </AnchorPane>

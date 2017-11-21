@@ -7,36 +7,44 @@ package software2;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
  *
  * @author SFFPC
  */
-public class EditCustomerController implements Initializable {
+public class NewCustomerController implements Initializable {
 
     @FXML
-    private Button saveBtn;    
+    private TextField customername;
     @FXML
-    private Button cancelBtn;
-    
+    private TextField address1;
+    @FXML
+    private TextField address2;
+    @FXML
+    private TextField city;
+    @FXML
+    private TextField country;
+    @FXML
+    private TextField postalcode;
+    @FXML
+    private TextField phone;
+    @FXML
+    private Button saveBtn;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         saveBtn.setOnAction((ActionEvent e) -> {
             // TO DO
         });
-       cancelBtn.setOnAction((ActionEvent e) -> {
-           Platform.exit();
-       });
     }    
     
 }

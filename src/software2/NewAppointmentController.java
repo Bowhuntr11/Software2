@@ -6,13 +6,21 @@
 package software2;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -60,6 +68,13 @@ public class NewAppointmentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setData();
+        
+        save.setOnAction((ActionEvent e) -> {
+            // TO DO
+        });
+        cancel.setOnAction((ActionEvent e) -> {
+            Platform.exit();
+        });
     }    
     
     public void setData(){
