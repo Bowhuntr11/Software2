@@ -8,6 +8,8 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 
 <StackPane fx:id="root" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="software2.LoginPageController">
    <children>
@@ -17,10 +19,17 @@
             <children>
                   <PasswordField fx:id="passwordBox" layoutX="251.0" layoutY="209.0" />
                   <TextField fx:id="usernameBox" layoutX="251.0" layoutY="139.0" />
-                  <Text layoutX="298.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
-                  <Text layoutX="300.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
+                  <Text fx:id="usernameText" layoutX="298.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
+                  <Text fx:id="passwordText" layoutX="300.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
                   <Button fx:id="submit" layoutX="298.0" layoutY="276.0" mnemonicParsing="false" text="Submit" />
-                  <ComboBox fx:id="languageBox" layoutX="523.0" layoutY="14.0" prefHeight="25.0" prefWidth="103.0" promptText="English" />
+                  <ComboBox fx:id="languageBox" layoutX="523.0" layoutY="14.0" prefHeight="25.0" prefWidth="103.0">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="English"/> 
+                                <String fx:value="French"/> 
+                            </FXCollections>
+                        </items>
+                  </ComboBox>
             </children>
           </AnchorPane>
         </children>
