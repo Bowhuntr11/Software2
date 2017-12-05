@@ -21,5 +21,6 @@
       <TextField fx:id="postalcode" layoutX="106.0" layoutY="231.0" promptText="Postal Code" />
       <TextField fx:id="phone" layoutX="106.0" layoutY="308.0" promptText="Phone #" />
       <Button fx:id="saveBtn" layoutX="160.0" layoutY="361.0" mnemonicParsing="false" text="Save" />
+      <Button fx:id="cancelBtn" layoutX="295.0" layoutY="361.0" mnemonicParsing="false" text="Cancel" />
    </children>
 </AnchorPane>

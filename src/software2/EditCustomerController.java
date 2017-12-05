@@ -5,13 +5,19 @@
  */
 package software2;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -34,9 +40,19 @@ public class EditCustomerController implements Initializable {
         saveBtn.setOnAction((ActionEvent e) -> {
             // TO DO
         });
-       cancelBtn.setOnAction((ActionEvent e) -> {
-           Platform.exit();
-       });
+        
+        cancelBtn.setOnAction((ActionEvent e) -> {
+            Parent window;
+            try {
+                window = FXMLLoader.load(getClass().getResource("CalendarView.fxml"));
+                Stage mainStage;
+                mainStage = Main.parentWindow;
+                mainStage.getScene().setRoot(window);
+                mainStage.sizeToScene();
+            } catch (IOException ex) {
+                Logger.getLogger(CalendarViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }    
     
 }

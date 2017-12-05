@@ -7,7 +7,6 @@ package software2;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,9 +16,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 /**
@@ -27,77 +23,27 @@ import javafx.stage.Stage;
  *
  * @author SFFPC
  */
-public class CalendarViewController implements Initializable {
+public class ReportsController implements Initializable {
+
     @FXML
-    private ComboBox SortByBox;
+    private Button NumberOfApptTypesPerMonth;
     @FXML
-    private TableView AppointmentTable;
+    private Button ScheduleForEachConsultant;
     @FXML
-    private Button NewCustomer;
+    private Button NewCustomersThisMonth;
     @FXML
-    private Button EditCustomer;
-    @FXML
-    private Button ScheduleAppointment;
-    @FXML
-    private Button EditAppointment;
-    @FXML
-    private Button Reports;
-    @FXML
-    private RadioButton local;
-    @FXML
-    private RadioButton GMT;
-    
+    private Button cancelBtn;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        AppointmentTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
-        //Setting up Button Listeners
-        NewCustomer.setOnAction((ActionEvent e) -> {
-            Parent window1;
-            try {
-                window1 = FXMLLoader.load(getClass().getResource("NewCustomer.fxml"));
-                Stage mainStage;
-                mainStage = Main.parentWindow;
-                mainStage.getScene().setRoot(window1);
-                mainStage.sizeToScene();
-            } catch (IOException ex) {
-                Logger.getLogger(CalendarViewController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });   
-        
-        EditCustomer.setOnAction((ActionEvent e) -> {
-            Parent window1;
-            try {
-                window1 = FXMLLoader.load(getClass().getResource("EditCustomer.fxml"));
-                Stage mainStage;
-                mainStage = Main.parentWindow;
-                mainStage.getScene().setRoot(window1);
-                mainStage.sizeToScene();
-            } catch (IOException ex) {
-                Logger.getLogger(CalendarViewController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-        
-        ScheduleAppointment.setOnAction((ActionEvent e) -> {
-            Parent window1;
-            try {
-                window1 = FXMLLoader.load(getClass().getResource("NewAppointment.fxml"));
-                Stage mainStage;
-                mainStage = Main.parentWindow;
-                mainStage.getScene().setRoot(window1);
-                mainStage.sizeToScene();
-            } catch (IOException ex) {
-                Logger.getLogger(CalendarViewController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-        
-        EditAppointment.setOnAction((ActionEvent e) -> {
+        NumberOfApptTypesPerMonth.setOnAction((ActionEvent e) -> {
             Parent window;
             try {
-                window = FXMLLoader.load(getClass().getResource("EditAppointment.fxml"));
+                window = FXMLLoader.load(getClass().getResource("Reports.fxml"));
                 Stage mainStage;
                 mainStage = Main.parentWindow;
                 mainStage.getScene().setRoot(window);
@@ -107,10 +53,36 @@ public class CalendarViewController implements Initializable {
             }
         });
         
-        Reports.setOnAction((ActionEvent e) -> {
+        ScheduleForEachConsultant.setOnAction((ActionEvent e) -> {
             Parent window;
             try {
                 window = FXMLLoader.load(getClass().getResource("Reports.fxml"));
+                Stage mainStage;
+                mainStage = Main.parentWindow;
+                mainStage.getScene().setRoot(window);
+                mainStage.sizeToScene();
+            } catch (IOException ex) {
+                Logger.getLogger(CalendarViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        
+        NewCustomersThisMonth.setOnAction((ActionEvent e) -> {
+            Parent window;
+            try {
+                window = FXMLLoader.load(getClass().getResource("Reports.fxml"));
+                Stage mainStage;
+                mainStage = Main.parentWindow;
+                mainStage.getScene().setRoot(window);
+                mainStage.sizeToScene();
+            } catch (IOException ex) {
+                Logger.getLogger(CalendarViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        
+        cancelBtn.setOnAction((ActionEvent e) -> {
+            Parent window;
+            try {
+                window = FXMLLoader.load(getClass().getResource("CalendarView.fxml"));
                 Stage mainStage;
                 mainStage = Main.parentWindow;
                 mainStage.getScene().setRoot(window);

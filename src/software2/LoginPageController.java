@@ -133,11 +133,11 @@ public class LoginPageController implements Initializable {
                             ResultSet resultSet = prepstate.executeQuery();
                             if (resultSet.next()) { //Correct User/Pass
                                 System.out.println("Correct login credentials");
-                                Parent window1;
-                                window1 = FXMLLoader.load(getClass().getResource("CalendarView.fxml"));
+                                Parent window;
+                                window = FXMLLoader.load(getClass().getResource("CalendarView.fxml"));
                                 Stage mainStage;
                                 mainStage = Main.parentWindow;
-                                mainStage.getScene().setRoot(window1);
+                                mainStage.getScene().setRoot(window);
                                 mainStage.sizeToScene();
                             } 
                             else { //Incorrect User/Pass

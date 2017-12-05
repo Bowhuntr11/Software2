@@ -5,21 +5,20 @@
  */
 package software2;
 
+import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
@@ -40,9 +39,9 @@ public class NewAppointmentController implements Initializable {
     @FXML
     private ComboBox selectedCustomer;
     @FXML
-    private Button save;
+    private Button saveBtn;
     @FXML
-    private Button cancel;
+    private Button cancelBtn;
     @FXML
     private ComboBox startMin;
     @FXML
@@ -69,11 +68,21 @@ public class NewAppointmentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setData();
         
-        save.setOnAction((ActionEvent e) -> {
+        saveBtn.setOnAction((ActionEvent e) -> {
             // TO DO
         });
-        cancel.setOnAction((ActionEvent e) -> {
-            Platform.exit();
+        
+        cancelBtn.setOnAction((ActionEvent e) -> {
+            Parent window;
+            try {
+                window = FXMLLoader.load(getClass().getResource("CalendarView.fxml"));
+                Stage mainStage;
+                mainStage = Main.parentWindow;
+                mainStage.getScene().setRoot(window);
+                mainStage.sizeToScene();
+            } catch (IOException ex) {
+                Logger.getLogger(CalendarViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }    
     
