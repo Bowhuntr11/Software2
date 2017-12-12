@@ -20,7 +20,7 @@ public class Main extends Application {
             parentWindow = primaryStage;
 		Parent root;
 		try {
-			root = FXMLLoader.load(getClass().getResource("CalendarView.fxml"));
+			root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;

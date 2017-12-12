@@ -12,7 +12,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -20,27 +19,21 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javax.swing.JFileChooser;
 
 /**
  * FXML Controller class
@@ -65,6 +58,7 @@ public class LoginPageController implements Initializable {
     @FXML
     private Text passwordText;
 
+    private static String User;
     /**
      * Initializes the controller class.
      * @param url
@@ -133,6 +127,7 @@ public class LoginPageController implements Initializable {
                             ResultSet resultSet = prepstate.executeQuery();
                             if (resultSet.next()) { //Correct User/Pass
                                 System.out.println("Correct login credentials");
+                                User = usernameBox.getText();
                                 Parent window;
                                 window = FXMLLoader.load(getClass().getResource("CalendarView.fxml"));
                                 Stage mainStage;
@@ -156,5 +151,9 @@ public class LoginPageController implements Initializable {
                     
                     System.out.println("Done");
                     
+    }
+
+    public static String getUser() {
+        return User;
     }
 }
