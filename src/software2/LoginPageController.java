@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -109,58 +110,37 @@ public class LoginPageController implements Initializable {
     }    
     
     public void dbconnect() throws ClassNotFoundException, SQLException, IOException, InterruptedException {
-                    Connection connection = null;
-                    String driver = "com.mysql.jdbc.Driver";
-                    String db = "U03lvi";
-                    String url = "jdbc:mysql://52.206.157.109/" + db;
-                    String user = "U03lvi";
-                    String pass = "53688016219";
-                        try {
-                            //Connect to Database, check user/pass
-                            Class.forName(driver);
-                            connection = DriverManager.getConnection(url,user,pass);
-                            System.out.println("Connected to database : " + db);
-                            PreparedStatement prepstate = connection.prepareStatement("Select userName,password from user where userName=? and password=?");
-                            prepstate.setString(1, usernameBox.getText());
-                            prepstate.setString(2, passwordBox.getText());
-                            ResultSet resultSet = prepstate.executeQuery();
-                            if (resultSet.next()) { //Correct User/Pass
-                                System.out.println("Correct login credentials");
-                                User = usernameBox.getText();
-                                Parent window;
-                                window = FXMLLoader.load(getClass().getResource("CalendarView.fxml"));
-                                Stage mainStage;
-                                mainStage = Main.parentWindow;
-                                mainStage.getScene().setRoot(window);
-                                mainStage.sizeToScene();
-                            } 
-                            else { //Incorrect User/Pass
-                                // root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
-                                if (languageBox.getValue().toString().equals("English")){
-                                System.out.println("Incorrect login credentials");
-                                Alert error = new Alert(AlertType.WARNING);
-                                error.setTitle("Error");
-                                error.setHeaderText("Incorrect Username/Password.");
-                                error.setContentText("Please try again.");
-                                error.showAndWait();
-                                }
-                                else {
-                                System.out.println("FRENCH");
-                                Alert error = new Alert(AlertType.WARNING);
-                                error.setTitle("Erreur");
-                                error.setHeaderText("Nom d'utilisateur / Mot de passe incorrect.");
-                                error.setContentText("Veuillez réessayer.");
-                                error.showAndWait();
-                                }
-                            }
-                        } catch (SQLException e) {
-                            System.out.println("SQLException: "+e.getMessage());
-                            System.out.println("SQLState: "+e.getSQLState());
-                            System.out.println("VendorError: "+e.getErrorCode());
+                    //Connect to Database, check user/pass
+                    PreparedStatement prepstate = dbConnection.dbConnect().prepareStatement("Select userName,password from user where userName=? and password=?");
+                    prepstate.setString(1, usernameBox.getText());
+                    prepstate.setString(2, passwordBox.getText());
+                    ResultSet resultSet = prepstate.executeQuery();
+                    if (resultSet.next()) { //Correct User/Pass
+                        System.out.println("Correct login credentials");
+                        User = usernameBox.getText();
+                        Parent window;
+                        window = FXMLLoader.load(getClass().getResource("CalendarView.fxml"));
+                        Stage mainStage;
+                        mainStage = Main.parentWindow;
+                        mainStage.getScene().setRoot(window);
+                        mainStage.sizeToScene();
+                    } else { //Incorrect User/Pass
+                        if (languageBox.getValue().toString().equals("English")){
+                            System.out.println("Incorrect login credentials");
+                            Alert error = new Alert(AlertType.WARNING);
+                            error.setTitle("Error");
+                            error.setHeaderText("Incorrect Username/Password.");
+                            error.setContentText("Please try again.");
+                            error.showAndWait();
+                        } else {
+                            System.out.println("FRENCH");
+                            Alert error = new Alert(AlertType.WARNING);
+                            error.setTitle("Erreur");
+                            error.setHeaderText("Nom d'utilisateur / Mot de passe incorrect.");
+                            error.setContentText("Veuillez réessayer.");
+                            error.showAndWait();
                         }
-                    
-                    System.out.println("Done");
-                    
+                    }
     }
 
     public static String getUser() {

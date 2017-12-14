@@ -96,23 +96,12 @@ public class NewCustomerController implements Initializable {
     }    
     
     public void dbconnect() throws ClassNotFoundException, SQLException, IOException, InterruptedException {
-                    Connection connection = null;
-                    Statement statement = null;
-                    String driver = "com.mysql.jdbc.Driver";
-                    String db = "U03lvi";
-                    String url = "jdbc:mysql://52.206.157.109/" + db;
-                    String user = "U03lvi";
-                    String pass = "53688016219";
+                    ResultSet rs;
+                    Statement st = dbConnection.dbConnect().createStatement();
                     countryId = countryId + 1;
                     Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-                        try {
-                            Class.forName(driver);
-                            connection = DriverManager.getConnection(url,user,pass);
-                            System.out.println("Connected to database : " + db);
-                            statement=connection.createStatement();
-                            
                             String getaddressId="SELECT addressId FROM address ORDER BY addressId DESC LIMIT 1;";
-                            ResultSet rset1 = statement.executeQuery(getaddressId);
+                            ResultSet rset1 = st.executeQuery(getaddressId);
                             if (!rset1.isBeforeFirst() ) {  
                                 System.out.println("No data");   
                                 addressId = 1;
@@ -124,7 +113,7 @@ public class NewCustomerController implements Initializable {
                             }
                             
                             String getcityId="SELECT cityId FROM city ORDER BY cityId DESC LIMIT 1;";
-                            ResultSet rset2 = statement.executeQuery(getcityId);
+                            ResultSet rset2 = st.executeQuery(getcityId);
                             if (!rset2.isBeforeFirst() ) {    
                                 System.out.println("No data"); 
                                 cityId = 1;
@@ -136,7 +125,7 @@ public class NewCustomerController implements Initializable {
                             }
                             
                             String getcountryId="SELECT countryId FROM country ORDER BY countryId DESC LIMIT 1;";
-                            ResultSet rset3 = statement.executeQuery(getcountryId);
+                            ResultSet rset3 = st.executeQuery(getcountryId);
                             if (!rset3.isBeforeFirst() ) {    
                                 System.out.println("No data"); 
                                 countryId = 1;
@@ -155,7 +144,7 @@ public class NewCustomerController implements Initializable {
                                     + date +  "', '"
                                     + LoginPageController.getUser() +  "', '"
                                     + LoginPageController.getUser() + "')";
-                            statement.executeUpdate(query);
+                            st.executeUpdate(query);
                             
                             // Adding to address table
                             String query2="INSERT INTO address(addressId, address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy) VALUES('"
@@ -169,7 +158,7 @@ public class NewCustomerController implements Initializable {
                                     + LoginPageController.getUser() + "', '"
                                     + date + "', '"
                                     + LoginPageController.getUser() + "')";
-                            statement.executeUpdate(query2);
+                            st.executeUpdate(query2);
                             
                             // Adding to city Table
                             String query3="INSERT INTO city(cityId, city, countryId, createDate, createdBy, lastUpdate, lastUpdateBy) VALUES('"
@@ -180,7 +169,7 @@ public class NewCustomerController implements Initializable {
                                     + LoginPageController.getUser() + "', '"
                                     + date + "', '"
                                     + LoginPageController.getUser() + "')";
-                            statement.executeUpdate(query3);
+                            st.executeUpdate(query3);
                             
                             // Adding to country Table
                             String query4="INSERT INTO country(countryId, country, createDate, createdBy, lastUpdate, lastUpdateBy) VALUES ('"
@@ -190,14 +179,8 @@ public class NewCustomerController implements Initializable {
                                     + LoginPageController.getUser() + "', '"
                                     + date + "', '"
                                     + LoginPageController.getUser() + "')";
-                            statement.executeUpdate(query4);
+                            st.executeUpdate(query4);
                             
                             
-                        } catch (SQLException e) {
-                            System.out.println("SQLException: "+e.getMessage());
-                            System.out.println("SQLState: "+e.getSQLState());
-                            System.out.println("VendorError: "+e.getErrorCode());
                         }
     }
-    
-}

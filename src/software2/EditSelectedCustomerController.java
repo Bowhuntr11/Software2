@@ -7,8 +7,6 @@ package software2;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -52,14 +50,14 @@ public class EditSelectedCustomerController implements Initializable {
     @FXML
     private Button cancelBtn;
 
-    private Integer idToEdit2;
+    private Integer idToEdit;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        idToEdit2 = EditCustomerController.idToEdit;
+        idToEdit = EditCustomerController.idToEdit;
         try {
             dbconnect();
         } catch (ClassNotFoundException | SQLException | IOException | InterruptedException ex) {
@@ -111,24 +109,14 @@ public class EditSelectedCustomerController implements Initializable {
     }    
     
     public void dbconnect() throws ClassNotFoundException, SQLException, IOException, InterruptedException {
-                    Connection connection = null;
-                    Statement st = null;
-                    String driver = "com.mysql.jdbc.Driver";
-                    String db = "U03lvi";
-                    String url = "jdbc:mysql://52.206.157.109/" + db;
-                    String user = "U03lvi";
-                    String pass = "53688016219";
+                    Statement st;
                     ResultSet rs;
-                        try {
-                            Class.forName(driver);
-                            connection = DriverManager.getConnection(url,user,pass);
-                            System.out.println("Connected to database : " + db);
-                            st=connection.createStatement();
-                            String recordQuery = ("Select * from customer" +
-                                " Inner Join address ON customer.addressId = address.addressId" +
-                                " Inner Join city ON address.cityId = city.cityId" +
-                                " Inner Join country ON city.countryId = country.countryId" +
-                                " WHERE customerId = " + idToEdit2 + ";"); 
+                    st = dbConnection.dbConnect().createStatement();
+                    String recordQuery = ("Select * from customer" +
+                        " Inner Join address ON customer.addressId = address.addressId" +
+                        " Inner Join city ON address.cityId = city.cityId" +
+                        " Inner Join country ON city.countryId = country.countryId" +
+                        " WHERE customerId = " + idToEdit + ";"); 
                             rs = st.executeQuery(recordQuery);
                             while(rs.next()){                
                                 Integer id = rs.getInt("customerId");
@@ -141,32 +129,14 @@ public class EditSelectedCustomerController implements Initializable {
                                 phone.setText(rs.getString("phone"));
                                 System.out.println(id +","+ customername +","+ address1 +","+ address2 +","+ city +","+ country +","+ postalcode +","+ phone + " added.");
                             }            
-                        }catch (SQLException e) {
-                            System.out.println("SQLException: "+e.getMessage());
-                            System.out.println("SQLState: "+e.getSQLState());
-                            System.out.println("VendorError: "+e.getErrorCode());
-                        }
-    
     }
     
     
     public void dbupdate() throws ClassNotFoundException, SQLException, IOException, InterruptedException {
-                    Connection connection = null;
-                    Statement statement = null;
-                    String driver = "com.mysql.jdbc.Driver";
-                    String db = "U03lvi";
-                    String url = "jdbc:mysql://52.206.157.109/" + db;
-                    String user = "U03lvi";
-                    String pass = "53688016219";
+                    ResultSet rs;
+                    Statement st = dbConnection.dbConnect().createStatement();
                     Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-                    Statement st;
-                        try {
-                            Class.forName(driver);
-                            connection = DriverManager.getConnection(url,user,pass);
-                            System.out.println("Connected to database : " + db);
-                            st=connection.createStatement();
-                            
-                            String recordUpdate = ("UPDATE customer" +
+                    String recordUpdate = ("UPDATE customer" +
                                     " Inner Join address ON customer.addressId = address.addressId" +
                                     " Inner Join city ON address.cityId = city.cityId" +
                                     " Inner Join country ON city.countryId = country.countryId" +
@@ -176,22 +146,13 @@ public class EditSelectedCustomerController implements Initializable {
                                     ", city = '" + city.getText() + "'" +
                                     ", country = '" + country.getText() + "'" +
                                     ", postalCode = '" + postalcode.getText() + "'" +
+                                    ", phone = '" + phone.getText() + "'" +
                                     ", customer.lastUpdateBy = '" + LoginPageController.getUser() + "'" +
-                                    ", customer.lastUpdate = '" + date + "'" +
                                     ", address.lastUpdateBy = '" + LoginPageController.getUser() + "'" +
-                                    ", address.lastUpdate = '" + date + "'" +
                                     ", city.lastUpdateBy = '" + LoginPageController.getUser() + "'" +
-                                    ", city.lastUpdate = '" + date + "'" +
                                     ", country.lastUpdateBy = '" + LoginPageController.getUser() + "'" +
-                                    ", country.lastUpdate = '" + date + "'" +
-                                    " WHERE customerID = " + idToEdit2 + ";");
+                                    " WHERE customerID = " + idToEdit + ";");
                             st.executeUpdate(recordUpdate);
-                            
-                            
-                        } catch (SQLException e) {
-                            System.out.println("SQLException: "+e.getMessage());
-                            System.out.println("SQLState: "+e.getSQLState());
-                            System.out.println("VendorError: "+e.getErrorCode());
-                        }
-    }
+    } 
 }
+
