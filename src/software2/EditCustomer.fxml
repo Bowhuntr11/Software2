@@ -7,17 +7,18 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="1031.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="software2.EditCustomerController">
    <children>
-      <TableView layoutX="26.0" layoutY="22.0" prefHeight="322.0" prefWidth="980.0">
+      <TableView fx:id="customerTable" layoutX="26.0" layoutY="22.0" prefHeight="322.0" prefWidth="980.0">
         <columns>
-          <TableColumn prefWidth="176.0" text="Customer Name" />
-            <TableColumn prefWidth="217.0" text="Address" />
-            <TableColumn minWidth="0.0" prefWidth="193.0" text="Address 2" />
-            <TableColumn minWidth="0.0" prefWidth="143.0" text="City" />
-            <TableColumn minWidth="0.0" prefWidth="106.0" text="Postal Code" />
-            <TableColumn prefWidth="144.0" text="Phone #" />
+            <TableColumn fx:id="idCol" prefWidth="38.0" text="ID#" />
+            <TableColumn fx:id="customerNameCol" prefWidth="244.0" text="Customer Name" />
+            <TableColumn fx:id="addressCol" prefWidth="255.0" text="Address" />
+            <TableColumn fx:id="address2Col" minWidth="0.0" prefWidth="181.0" text="Address 2" />
+            <TableColumn fx:id="cityCol" minWidth="0.0" prefWidth="124.0" text="City" />
+            <TableColumn fx:id="postalCol" minWidth="0.0" prefWidth="138.0" text="Postal Code" />
+            <TableColumn fx:id="phoneCol" prefWidth="175.0" text="Phone #" />
         </columns>
       </TableView>
-      <Button fx:id="saveBtn" layoutX="857.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Save" />
       <Button fx:id="cancelBtn" layoutX="936.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Cancel" />
+      <Button fx:id="editBtn" layoutX="473.0" layoutY="361.0" mnemonicParsing="false" text="Edit Selected" />
    </children>
 </AnchorPane>

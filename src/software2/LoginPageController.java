@@ -59,6 +59,7 @@ public class LoginPageController implements Initializable {
     private Text passwordText;
 
     private static String User;
+    private String language;
     /**
      * Initializes the controller class.
      * @param url
@@ -88,13 +89,11 @@ public class LoginPageController implements Initializable {
                 usernameText.setText("Username");
                 passwordText.setText("Password");
                 submit.setText("Submit");
-                System.out.println("English");
             }
             if ("French".equals(t1) || Locale.getDefault() == Locale.FRANCE) {
                 usernameText.setText("Nom d'utilisateur");
                 passwordText.setText("Mot de passe");
                 submit.setText("Soumettre");
-                System.out.println("French");
             }
           }    
         });
@@ -137,11 +136,22 @@ public class LoginPageController implements Initializable {
                             } 
                             else { //Incorrect User/Pass
                                 // root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
+                                if (languageBox.getValue().toString().equals("English")){
                                 System.out.println("Incorrect login credentials");
                                 Alert error = new Alert(AlertType.WARNING);
                                 error.setTitle("Error");
-                                error.setContentText("Incorrect Username/Password. Please try again.");
+                                error.setHeaderText("Incorrect Username/Password.");
+                                error.setContentText("Please try again.");
                                 error.showAndWait();
+                                }
+                                else {
+                                System.out.println("FRENCH");
+                                Alert error = new Alert(AlertType.WARNING);
+                                error.setTitle("Erreur");
+                                error.setHeaderText("Nom d'utilisateur / Mot de passe incorrect.");
+                                error.setContentText("Veuillez réessayer.");
+                                error.showAndWait();
+                                }
                             }
                         } catch (SQLException e) {
                             System.out.println("SQLException: "+e.getMessage());

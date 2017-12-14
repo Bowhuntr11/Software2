@@ -8,7 +8,6 @@ package software2;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +17,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -65,12 +63,12 @@ public class NewCustomerController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         saveBtn.setOnAction((ActionEvent e) -> {
             try {
-                if(customername.getText() == null || address1.getText() == null || address2.getText() == null || city.getText() == null || country.getText() == null
-                        || postalcode.getText() == null || phone.getText() == null) {
-                            System.out.println("Incorrect login credentials");
+                if(customername.getLength() == 0 || address1.getLength() == 0 || address2.getLength() == 0 || city.getLength() == 0 || country.getLength() == 0
+                        || postalcode.getLength() == 0 || phone.getLength() == 0) {
+                            System.out.println("Fields can't be blank");
                             Alert error = new Alert(Alert.AlertType.WARNING);
                             error.setTitle("Error");
-                            error.setContentText("Incorrect Username/Password. Please try again.");
+                            error.setContentText("Did you fill out all the fields?");
                             error.showAndWait();
                 }
                 else {
