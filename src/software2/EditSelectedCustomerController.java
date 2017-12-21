@@ -56,7 +56,6 @@ public class EditSelectedCustomerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         idToEdit = EditCustomerController.idToEdit;
         try {
             dbconnect();

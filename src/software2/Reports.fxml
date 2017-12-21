@@ -3,12 +3,11 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="203.0" prefWidth="313.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="software2.ReportsController">
+<AnchorPane id="AnchorPane" prefHeight="203.0" prefWidth="313.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="software2.ReportsController">
    <children>
       <Button fx:id="NumberOfApptTypesPerMonth" layoutX="36.0" layoutY="33.0" mnemonicParsing="false" text="Number of Appointment Types per Month" />
       <Button fx:id="ScheduleForEachConsultant" layoutX="72.0" layoutY="77.0" mnemonicParsing="false" text="Schedule for each consultant" />
-      <Button fx:id="NewCustomersThisMonth" layoutX="64.0" layoutY="122.0" mnemonicParsing="false" text="# of New Customers this Month" />
+      <Button fx:id="NamesOfConsultants" layoutX="93.0" layoutY="122.0" mnemonicParsing="false" text="Names of Users" />
       <Button fx:id="cancelBtn" layoutX="251.0" layoutY="164.0" mnemonicParsing="false" text="Cancel" />
    </children>
 </AnchorPane>

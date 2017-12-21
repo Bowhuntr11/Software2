@@ -5,16 +5,20 @@
  */
 package software2;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -60,7 +64,7 @@ public class LoginPageController implements Initializable {
     private Text passwordText;
 
     private static String User;
-    private String language;
+    
     /**
      * Initializes the controller class.
      * @param url
@@ -118,6 +122,8 @@ public class LoginPageController implements Initializable {
                     if (resultSet.next()) { //Correct User/Pass
                         System.out.println("Correct login credentials");
                         User = usernameBox.getText();
+                        userLoginToFile();
+                        checkForAppointments();
                         Parent window;
                         window = FXMLLoader.load(getClass().getResource("CalendarView.fxml"));
                         Stage mainStage;
@@ -146,4 +152,60 @@ public class LoginPageController implements Initializable {
     public static String getUser() {
         return User;
     }
+    
+    // Writing user log
+    public void userLoginToFile() {
+        Date date = new Date();
+        try(FileWriter fw = new FileWriter("userLogins.txt", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter out = new PrintWriter(bw))
+        {
+            out.println(getUser() + " logged in at: " + date.toString());
+        } catch (IOException ex) {
+            Logger.getLogger(LoginPageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    // Checking for appointments within 15 minutes
+    public void checkForAppointments() throws SQLException {
+        ResultSet rs;
+        Statement st = dbConnection.dbConnect().createStatement();
+        Date now = new Date(); 
+        
+        String getAppointmentTimes = ("Select customerName, title, location, start from appointment" +
+            " Inner Join customer ON appointment.customerId = customer.customerId" +
+            " WHERE appointment.createdBy = " + "\"" + LoginPageController.getUser() + "\"" + ";");
+        
+        try {
+            rs = st.executeQuery(getAppointmentTimes);
+            while(rs.next()){
+                String customer = rs.getString(1);
+                String title = rs.getString(2);
+                String location = rs.getString(3);
+                long startTime = rs.getTimestamp(4).getTime();
+                long nowTime = now.getTime();
+                
+                Date startDate = new Date(startTime + TimeZone.getDefault().getOffset(startTime));
+                long millis = startDate.getTime();
+                SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+                String startString = sdf.format(startDate);
+                
+                long timeLeft = millis-nowTime;
+                if (timeLeft <= 900000 && timeLeft >= 0 ) {
+                    Alert error = new Alert(Alert.AlertType.WARNING);
+                    error.setTitle("Appointment is within 15 minutes");
+                    error.setHeaderText("Appointment Reminder");
+                    error.setContentText("You have a " + title.toUpperCase() + 
+                            " with " + customer.toUpperCase() +
+                            " at " + startString +
+                            " located at " + location);
+                    error.showAndWait();
+                    return;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NewAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }
 }
+    

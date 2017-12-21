@@ -79,17 +79,24 @@ public class EditAppointmentController implements Initializable {
     private final String[] mins = {"00","05","10","15","20","25","30",
                                         "35","40","45","50","55"};
     private final String[] ampm = {"AM","PM"};
+    
+    private Integer apptToEdit;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        customers.setValue("Customer");
+        apptToEdit = CalendarViewController.apptToEdit;
         setData();
         try {
             getCustomerNames();
         } catch (SQLException ex) {
+            Logger.getLogger(NewAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            dbconnect();
+        } catch (ClassNotFoundException | SQLException | IOException | InterruptedException ex) {
             Logger.getLogger(EditAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -108,8 +115,8 @@ public class EditAppointmentController implements Initializable {
             String startTime = startHour.getValue().toString() + ":" + startMin.getValue().toString();
             String endTime = endHour.getValue().toString() + ":" + endMin.getValue().toString();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd KK:mm a");
-            TimeZone tz = TimeZone.getDefault();
-            sdf.setTimeZone(tz);
+            sdf.setTimeZone(TimeZone.getDefault());
+            Parent window;
                 try {
                     Date appointmentStart = sdf.parse(selectedDate + " " + startTime + " " + startAMPM.getValue().toString());
                     Date appointmentEnd = sdf.parse(selectedDate + " " + endTime + " " + endAMPM.getValue().toString());
@@ -123,14 +130,31 @@ public class EditAppointmentController implements Initializable {
                         try {
                             appointmentStarts = new Timestamp(appointmentStart.getTime());
                             appointmentEnds = new Timestamp(appointmentEnd.getTime());
-                            setAppointment();
+                            updateAppointment();
+                            window = FXMLLoader.load(getClass().getResource("CalendarView.fxml"));
+                            Stage mainStage;
+                            mainStage = Main.parentWindow;
+                            mainStage.getScene().setRoot(window);
+                            mainStage.sizeToScene();
                         } catch (SQLException ex) {
+                            Logger.getLogger(NewAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
                             Logger.getLogger(EditAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 } catch (ParseException ex) {
-                    Logger.getLogger(EditAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(NewAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }
+            Parent window;
+            try {
+                window = FXMLLoader.load(getClass().getResource("CalendarView.fxml"));
+                Stage mainStage;
+                mainStage = Main.parentWindow;
+                mainStage.getScene().setRoot(window);
+                mainStage.sizeToScene();
+            } catch (IOException ex) {
+                Logger.getLogger(CalendarViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
         
@@ -157,6 +181,38 @@ public class EditAppointmentController implements Initializable {
         endAMPM.setItems(FXCollections.observableArrayList(ampm));
     }
     
+    public void dbconnect() throws ClassNotFoundException, SQLException, IOException, InterruptedException {
+                    Statement st;
+                    ResultSet rs;
+                    st = dbConnection.dbConnect().createStatement();
+                    String recordQuery = ("Select * from appointment" +
+                        " Inner Join customer ON appointment.customerId = customer.customerId" +
+                        " WHERE appointmentId = " + apptToEdit + ";"); 
+                            rs = st.executeQuery(recordQuery);
+                            while(rs.next()){
+                                title.setText(rs.getString("title"));
+                                description.setText(rs.getString("description"));
+                                location.setText(rs.getString("location")); 
+                                urlText.setText(rs.getString("url"));
+                                java.sql.Date startDate = rs.getDate("start");
+                                datePicker.setValue(startDate.toLocalDate());
+                                
+                                long startTimeMilli = rs.getTimestamp("start").getTime();
+                                Date startDate2 = new Date(startTimeMilli + TimeZone.getDefault().getOffset(startTimeMilli));
+                                startHour.setValue(new SimpleDateFormat("hh").format(startDate2));
+                                startMin.setValue(new SimpleDateFormat("mm").format(startDate2));
+                                startAMPM.setValue(new SimpleDateFormat("a").format(startDate2));
+                                
+                                long endTimeMilli = rs.getTimestamp("end").getTime();
+                                Date endDate = new Date(endTimeMilli + TimeZone.getDefault().getOffset(endTimeMilli));
+                                endHour.setValue(new SimpleDateFormat("hh").format(endDate));
+                                endMin.setValue(new SimpleDateFormat("mm").format(endDate));
+                                endAMPM.setValue(new SimpleDateFormat("a").format(endDate));
+                                
+                                customers.setValue(rs.getString("customerName"));
+                            }            
+    }
+    
     public void getCustomerNames() throws SQLException {
         ResultSet rs; 
         Statement st = dbConnection.dbConnect().createStatement();
@@ -167,28 +223,25 @@ public class EditAppointmentController implements Initializable {
         }
     }
     
-    public void setAppointment() throws SQLException {
+    public void updateAppointment() throws SQLException, ParseException {
         ResultSet rs;
         Statement st = dbConnection.dbConnect().createStatement();
-        Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-        
-        String getCustomerId="SELECT customerId FROM customer WHERE customerName = '" + selectedCustomer + "';";
+        String getCustomerId= ("SELECT customerId FROM customer WHERE customerName = '" + selectedCustomer + "';");
         rs = st.executeQuery(getCustomerId);
         rs.next();
-        selectedCustomerId = rs.getInt(1);
         
-        // Adding to customer table
-        String query="INSERT INTO appointment(customerId, title, description, location, url, start, end, createDate, createdBy, lastUpdateBy) VALUES('" 
-                + selectedCustomerId + "', '"
-                + title.getText() +  "', '"
-                + description.getText() +  "', '"
-                + location.getText() +  "', '"
-                + urlText.getText() +  "', '"
-                + appointmentStarts +  "', '"
-                + appointmentEnds +  "', '"
-                + date +  "', '"
-                + LoginPageController.getUser() +  "', '"
-                + LoginPageController.getUser() + "')";
+        // Editing Appointment
+        String query= ("UPDATE appointment" +
+            " Inner Join customer ON appointment.customerId = customer.customerId" +
+            " SET appointment.customerId = '" + rs.getString("customerId") + "'" +
+            ", title = '" + title.getText() + "'" +
+            ", description = '" + description.getText() + "'" +
+            ", location = '" + location.getText() + "'" +
+            ", url = '" + urlText.getText() + "'" +
+            ", start = '" + appointmentStarts + "'" +
+            ", end = '" + appointmentEnds + "'" +
+            ", appointment.lastUpdateBy = '" + LoginPageController.getUser() + "'" +
+            " WHERE appointmentID = " + apptToEdit + ";");
         st.executeUpdate(query);
         
     }

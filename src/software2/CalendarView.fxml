@@ -14,29 +14,26 @@
 
 <AnchorPane id="AnchorPane" prefHeight="526.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="software2.CalendarViewController">
    <children>
-      <TableView fx:id="AppointmentTable" layoutX="105.0" layoutY="180.0" prefHeight="306.0" prefWidth="601.0">
+      <TableView fx:id="AppointmentTable" layoutX="44.0" layoutY="180.0" prefHeight="306.0" prefWidth="709.0">
         <columns>
-          <TableColumn fx:id="DateAptView" editable="false" prefWidth="119.0" text="Date" />
-          <TableColumn fx:id="StartTimeAptView" editable="false" prefWidth="91.0" text="Start Time" />
-            <TableColumn fx:id="StopTimeAptView" editable="false" prefWidth="87.0" text="Stop Time" />
-            <TableColumn fx:id="AptTypeAptView" editable="false" prefWidth="168.0" text="Appointment Type" />
-            <TableColumn fx:id="CustomerAptView" editable="false" minWidth="8.0" prefWidth="134.0" text="Customer" />
+          <TableColumn fx:id="apptIdCol" editable="false" prefWidth="30.0" text="ID" />
+          <TableColumn fx:id="dateCol" editable="false" prefWidth="98.0" text="Date" />
+          <TableColumn fx:id="startCol" editable="false" prefWidth="94.0" text="Start Time" />
+          <TableColumn fx:id="endCol" editable="false" prefWidth="87.0" text="Stop Time" />
+          <TableColumn fx:id="apptTypeCol" editable="false" prefWidth="239.0" text="Appointment Type" />
+          <TableColumn fx:id="customerCol" editable="false" minWidth="8.0" prefWidth="160.0" text="Customer" />
         </columns>
       </TableView>
-      <Text layoutX="368.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointments" />
+      <Text layoutX="311.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Upcoming Appointments" />
       <Button fx:id="NewCustomer" layoutX="106.0" layoutY="73.0" mnemonicParsing="false" text="New Customer" />
       <Button fx:id="EditCustomer" layoutX="246.0" layoutY="73.0" mnemonicParsing="false" text="Edit Customer" />
       <Button fx:id="ScheduleAppointment" layoutX="378.0" layoutY="73.0" mnemonicParsing="false" text="Schedule Appointment" />
       <Button fx:id="EditAppointment" layoutX="548.0" layoutY="73.0" mnemonicParsing="false" text="Edit Selected Appointment" />
       <Button fx:id="Reports" layoutX="378.0" layoutY="491.0" mnemonicParsing="false" text="Reports" />
-      <Label layoutX="106.0" layoutY="130.0" text="Show by" />
-      <RadioButton fx:id="local" layoutX="516.0" layoutY="495.0" mnemonicParsing="false" selected="true" text="Local Timezone/DST">
-         <toggleGroup>
-            <ToggleGroup fx:id="togglegroup" />
-         </toggleGroup>
-      </RadioButton>
+      <Label layoutX="69.0" layoutY="134.0" text="Show by" />
+      <RadioButton fx:id="local" layoutX="516.0" layoutY="495.0" mnemonicParsing="false" selected="true" text="Local Timezone/DST" toggleGroup="$togglegroup" />
       <RadioButton fx:id="GMT" layoutX="659.0" layoutY="495.0" mnemonicParsing="false" text="GMT" toggleGroup="$togglegroup" />
-      <ComboBox fx:id="SortByBox" layoutX="106.0" layoutY="149.0" prefHeight="25.0" prefWidth="95.0" promptText="Month">
+      <ComboBox fx:id="SortByBox" layoutX="44.0" layoutY="152.0" prefHeight="25.0" prefWidth="95.0" promptText="Month">
         <items>
             <FXCollections fx:factory="observableArrayList">
                 <String fx:value="Month" /> 

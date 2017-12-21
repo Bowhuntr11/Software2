@@ -83,7 +83,6 @@ public class EditCustomerController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(CalendarViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println(selCustomer.getIdCol());
         });
         
         cancelBtn.setOnAction((ActionEvent e) -> {
